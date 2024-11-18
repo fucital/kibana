@@ -13,6 +13,7 @@ import { EuiPanel, EuiFlexItem, EuiFlexGroup } from '@elastic/eui';
 import { BoolQuery } from '@kbn/es-query';
 import { AlertConsumers } from '@kbn/rule-data-utils';
 import { useKibana } from '@kbn/kibana-react-plugin/public';
+import { ObservabilityAlertsTable } from '@kbn/observability-plugin/public';
 import { apmAlertingFeatureIds } from '../../../../common/alerting/config/apm_alerting_feature_ids';
 import { ApmPluginStartDeps } from '../../../plugin';
 import { useAnyOfApmParams } from '../../../hooks/use_apm_params';
@@ -39,11 +40,7 @@ export function AlertsOverview() {
   }, [alertStatus]);
 
   const {
-    triggersActionsUi: {
-      getAlertsStateTable: AlertsStateTable,
-      getAlertsSearchBar: AlertsSearchBar,
-      alertsTableConfigurationRegistry,
-    },
+    triggersActionsUi: { getAlertsSearchBar: AlertsSearchBar },
     notifications,
     data: {
       query: {
@@ -51,7 +48,6 @@ export function AlertsOverview() {
       },
     },
     uiSettings,
-    observability: { observabilityRuleTypeRegistry },
   } = services;
 
   const useToasts = () => notifications!.toasts;
@@ -104,14 +100,10 @@ export function AlertsOverview() {
         </EuiFlexItem>
         <EuiFlexItem>
           {esQuery && (
-            <AlertsStateTable
-              alertsTableConfigurationRegistry={alertsTableConfigurationRegistry}
+            <ObservabilityAlertsTable
               id={'service-overview-alerts'}
-              configurationId={AlertConsumers.OBSERVABILITY}
               featureIds={apmAlertingFeatureIds}
               query={esQuery}
-              showAlertStatusWithFlapping
-              cellContext={{ observabilityRuleTypeRegistry }}
             />
           )}
         </EuiFlexItem>
