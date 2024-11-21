@@ -5,11 +5,10 @@
  * 2.0.
  */
 
-import { renderHook, act } from '@testing-library/react-hooks';
 import { useExpandedCard } from './use_expanded_card';
 import { HEIGHT_ANIMATION_DURATION } from '../onboarding_card_panel.styles';
 import type { OnboardingCardId } from '../../../constants';
-import { waitFor } from '@testing-library/react';
+import { waitFor, renderHook, act } from '@testing-library/react';
 
 const scrollTimeout = HEIGHT_ANIMATION_DURATION + 50;
 
